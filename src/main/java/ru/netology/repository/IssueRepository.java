@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class IssueRepository {
+
     private List<Issue> items = new ArrayList<>();
 
     public boolean save(Issue item) {

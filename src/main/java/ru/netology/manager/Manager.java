@@ -37,19 +37,26 @@ public class Manager {
         return items;
     }
 
-    public Collection<Issue> returnOpenYClosed() {
+    public Collection<Issue> returnOpened() {
         Collection<Issue> itemsO = new ArrayList<>();
-        Collection<Issue> itemsC = new ArrayList<>();
+
         for (Issue item : repository.findAll()) {
             if (item.isOpen() == true) {
                 itemsO.add(item);
-            } else {
+            }
+        }
+        return itemsO;
+    }
+
+    public Collection<Issue> returnClosed() {
+
+        Collection<Issue> itemsC = new ArrayList<>();
+        for (Issue item : repository.findAll()) {
+            if (item.isOpen() == false) {
                 itemsC.add(item);
             }
         }
-        System.out.println("Opened:" + itemsO);
-        System.out.println("Closed:" + itemsC);
-        return null;
+        return itemsC;
     }
 
     public boolean changeStatus(int id) {
@@ -97,6 +104,12 @@ public class Manager {
         }
         return (List<Issue>) items;
 
+    }
+
+    public List<Issue> sortedByOpenTime() {
+        List<Issue> result = repository.findAll();
+        Collections.sort(result);
+        return result;
     }
 
 
