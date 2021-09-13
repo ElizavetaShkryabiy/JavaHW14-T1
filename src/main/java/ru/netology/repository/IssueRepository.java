@@ -18,14 +18,16 @@ public class IssueRepository {
         return items;
     }
 
-    public Issue[] findById(int id) {
+    public List<Issue> findById(int id) {
+        List<Issue> result = new ArrayList<>();
         for (Issue item : items) {
             if (item.getId() == id) {
-                return new Issue[]{item};
+                result.add(item);
             }
         }
-        return null;
+        return result;
     }
+
 
     public boolean getStatus(int id) {
         boolean status = false;

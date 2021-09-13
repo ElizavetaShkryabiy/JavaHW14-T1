@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IssueRepositoryTest {
     private IssueRepository repository = new IssueRepository();
@@ -21,6 +22,8 @@ class IssueRepositoryTest {
     private Issue error4 = new Issue(4, "errorIn4", "Kirill Pupkin",
            "systemError", "Lev Pupkin", true, 80);
     private Issue error5 = new Issue(5, "errorIn5", "Ilya Pupkin",
+            "systemError", "Lyoha Pupkin", true, 5);
+    private Issue error6 = new Issue(5, "errorIn5", "Ilya Pupkin",
             "systemError", "Lyoha Pupkin", true, 5);
 
 
@@ -64,17 +67,40 @@ class IssueRepositoryTest {
     @Test
     public void shouldFindById() {
         repository.addAll(List.of(error1, error2, error3, error4, error5));
-        Issue[] expected = new Issue[]{error2};
-        Issue[] actual = repository.findById(2);
-        assertArrayEquals(expected, actual);
+        List<Issue> expected =new ArrayList<>(List.of(error2));
+        List<Issue> actual = repository.findById(2);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindBySameId() {
+        repository.addAll(List.of(error1, error2, error3, error4, error5, error6));
+        List<Issue> expected = new ArrayList<>(List.of(error5, error6));
+        List<Issue> actual = repository.findById(5);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void shouldFindByNotExistingId() {
         repository.addAll(List.of(error1, error2, error3, error4, error5));
-        Issue[] expected = null;
-        Issue[] actual = repository.findById(7);
-        assertArrayEquals(expected, actual);
+        List<Issue> expected = new ArrayList<>();
+        List<Issue> actual = repository.findById(7);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNotFindItemInEmptyRepository (){
+        List<Issue> actual = repository.findById(1);
+        List<Issue> expected = new ArrayList<>();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSetStatus(){
+        repository.addAll(List.of(error1, error2, error3, error4, error5, error6));
+        boolean actual = repository.setStatus(1, false);
+        boolean expected = false;
+        assertEquals(expected, actual);
     }
 
 
