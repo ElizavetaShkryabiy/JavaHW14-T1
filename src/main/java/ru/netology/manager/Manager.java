@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Manager {
     private IssueRepository repository;
-//    private Collection<Issue> items = new ArrayList<>();
+
 
     public Manager(IssueRepository repository) {
         this.repository = repository;
@@ -23,13 +23,51 @@ public class Manager {
         repository.save(issue);
     }
 
+    public boolean getStatus(int id) {
+        return repository.getStatus(id);
+    }
+
+    public Collection<Issue> filterByOpen(boolean open) {
+        Collection<Issue> items = new ArrayList<>();
+        for (Issue item : repository.findAll()) {
+            if (item.isOpen() == open) {
+                items.add(item);
+            }
+        }
+        return items;
+    }
+
+    public Collection<Issue> returnOpenYClosed() {
+        Collection<Issue> itemsO = new ArrayList<>();
+        Collection<Issue> itemsC = new ArrayList<>();
+        for (Issue item : repository.findAll()) {
+            if (item.isOpen() == true) {
+                itemsO.add(item);
+            } else {
+                itemsC.add(item);
+            }
+        }
+        System.out.println("Opened:" + itemsO);
+        System.out.println("Closed:" + itemsC);
+        return null;
+    }
+
+    public boolean changeStatus(int id) {
+        boolean item = repository.getStatus(id);
+        if (item == true) {
+            item = false;
+        } else {
+            item = true;
+        }
+        return item;
+    }
+
+
     public Collection<Issue> filterByAuthor(String author) {
         Collection<Issue> items = new ArrayList<>();
         for (Issue item : repository.findAll()) {
             String expectedAuthor = item.getAuthor();
             if (expectedAuthor.equals(author)) {
-                Collection<Issue> tmp = new ArrayList<>(items.size() + 1);
-//                System.arraycopy(items, 0, tmp, 0, items.size());
                 items.add(item);
             }
         }
@@ -42,8 +80,6 @@ public class Manager {
         for (Issue item : repository.findAll()) {
             String expectedLabel = item.getLabel();
             if (expectedLabel.equals(label)) {
-                Collection<Issue> tmp = new ArrayList<>(items.size() + 1);
-//                System.arraycopy(items, 0, tmp, 0, items.size());
                 items.add(item);
             }
         }
@@ -51,13 +87,11 @@ public class Manager {
 
     }
 
-    public List<Issue> filterByAssignee(String assignee ) {
+    public List<Issue> filterByAssignee(String assignee) {
         Collection<Issue> items = new ArrayList<>();
         for (Issue item : repository.findAll()) {
             String expectedAssignee = item.getAssignee();
             if (expectedAssignee.equals(assignee)) {
-                Collection<Issue> tmp = new ArrayList<>(items.size() + 1);
-//                System.arraycopy(items, 0, tmp, 0, items.size());
                 items.add(item);
             }
         }

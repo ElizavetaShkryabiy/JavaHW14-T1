@@ -26,6 +26,28 @@ public class IssueRepository {
         return null;
     }
 
+    public boolean getStatus(int id) {
+        boolean status = false;
+        for (Issue item : items) {
+            if (item.getId() == id) {
+                status = item.isOpen();
+                return status;
+            }
+        }
+        return status;
+    }
+
+    public boolean setStatus(int id, boolean status) {
+        boolean statusD = status;
+        for (Issue item : items) {
+            if (item.getId() == id) {
+                item.setOpen(status);
+                return statusD;
+            }
+        }
+        return statusD;
+    }
+
     public boolean removeById(int id) {
         return items.removeIf(item -> item.getId() == id);
     }

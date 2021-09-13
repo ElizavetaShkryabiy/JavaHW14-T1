@@ -5,10 +5,7 @@ import org.junit.jupiter.api.Test;
 import ru.netology.domain.Issue;
 import ru.netology.repository.IssueRepository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,7 +36,15 @@ public class ManagerTest {
     @Test
     public void shouldAddItemsInRepository() {
         List<Issue> actual = manager.findAll();
+        List<Issue> expected = new ArrayList<>(List.of(error1, error2, error3, error4, error5));
+        assertEquals(expected,actual);
+    }
 
+    @Test
+    public void shouldGetStatus(){
+        boolean actual = manager.getStatus(1);
+        boolean expected = true;
+        assertEquals(expected,actual);
     }
 
     @Test
@@ -62,6 +67,25 @@ public class ManagerTest {
     public void shouldBeFilteredByAssignee() {
         List<Issue> actual = manager.filterByAssignee("Lev Pupkin");
         List<Issue> expected = new ArrayList<>(List.of(error4));
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void shouldBeFilteredByOpen() {
+        Collection<Issue> actual = manager.filterByOpen(false);
+        List<Issue> expected = new ArrayList<>(List.of(error2, error3));
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void shouldReturnListsOfOpenedAndClosed(){
+        Collection<Issue> actual = manager.returnOpenYClosed();
+    }
+
+    @Test
+    public void shouldChangeStatusToOpen (){
+       boolean actual = manager.changeStatus(2);
+        boolean expected = true;
         assertEquals(expected,actual);
     }
 
