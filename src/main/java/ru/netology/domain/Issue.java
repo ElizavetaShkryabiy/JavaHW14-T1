@@ -53,7 +53,7 @@ public class Issue implements Comparable<Issue> {
         return label;
     }
 
-    public void setLabel(String label) {
+    public void SetLabel(String label) {
         this.label = label;
     }
 

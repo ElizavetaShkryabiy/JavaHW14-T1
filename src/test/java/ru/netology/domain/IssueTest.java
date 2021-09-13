@@ -37,7 +37,7 @@ class IssueTest {
         product.setAuthor("100");
     }
     @Test
-    public void shouldGetAutor() {
+    public void shouldGetAuthor() {
         Issue product = new Issue();
         product.setAuthor("100");
         product.getAuthor();
@@ -46,12 +46,12 @@ class IssueTest {
     @Test
     public void shouldSetLabel() {
         Issue product = new Issue();
-        product.setLabel("Name");
+        product.SetLabel("Name");
     }
     @Test
     public void shouldGetLabel() {
         Issue product = new Issue();
-        product.setLabel("Name");
+        product.SetLabel("Name");
         product.getLabel();
     }
 
